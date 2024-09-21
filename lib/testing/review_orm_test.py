@@ -132,13 +132,15 @@ class TestReview:
             INSERT INTO reviews (year, summary, employee_id)
             VALUES (2022, 'Amazing coder!', ?)
         """
+        print("Inserting review...")
         CURSOR.execute(sql, (employee.id,))
+        print("Inserted:", CURSOR.lastrowid)
 
         sql = """
             SELECT * FROM reviews
         """
         row = CURSOR.execute(sql).fetchone()
-
+        print("Fetched row:", row)
         review = Review.instance_from_db(row)
         assert ((row[0], row[1], row[2], row[3]) ==
                 (review.id, review.year, review.summary, review.employee_id) ==
